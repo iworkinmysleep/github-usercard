@@ -3,6 +3,17 @@
            https://api.github.com/users/<your name>
 */
 
+const entryPoint = document.querySelector('.card');
+
+axios
+.get('https://api.github.com/users/iworkinmysleep')
+.then(response => {
+    console.log(response.data)
+    entryPoint.appendChild(githubCard)
+  })
+.catch(err => {
+  console.log('error')
+})
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +56,40 @@ const followersArray = [];
 </div>
 
 */
+
+const githubCard = (people) => {
+  const gitCard = document.createElement('div');
+  const gitImage = document.createElement('img');
+  const gitInfo = document.createElement('div');
+  const gitName = document.createElement('h3');
+  const gitUsername = document.createElement('p');
+  const gitLocation = document.createElement('p');
+  const gitProfile = document.createElement('p');
+  const gitFollowers = document.createElement('p');
+  const gitFollowing = document.createElement('p');
+  const gitBio = document.createElement('p');
+
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  profile.appendChild(address);
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  userName.classList.add('username');
+
+  
+
+  return githubCard;
+}
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
