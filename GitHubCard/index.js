@@ -3,15 +3,30 @@
            https://api.github.com/users/<your name>
 */
 
-const entryPoint = document.querySelector('.card');
+const entryPoint = document.querySelector('.cards');
 
 axios
 .get('https://api.github.com/users/iworkinmysleep')
 .then(response => {
     console.log(response.data)
-    entryPoint.appendChild(githubCard)
+    const newCard = githubCard(response.data)
+    entryPoint.appendChild(newCard)
   })
-.catch(err => {
+
+.catch(error => {
+  console.log('error')
+})
+
+axios
+.get('https://api.github.com/users/iworkinmysleep/followers')
+.then(response => {
+  console.log(response.data)
+    response.data.forEach(url => {
+    entryPoint.appendChild(githubCard(url))
+  })
+})
+
+.catch(error => {
   console.log('error')
 })
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -57,38 +72,51 @@ const followersArray = [];
 
 */
 
-const githubCard = (people) => {
-  const gitCard = document.createElement('div');
-  const gitImage = document.createElement('img');
-  const gitInfo = document.createElement('div');
-  const gitName = document.createElement('h3');
-  const gitUsername = document.createElement('p');
-  const gitLocation = document.createElement('p');
-  const gitProfile = document.createElement('p');
-  const gitFollowers = document.createElement('p');
-  const gitFollowing = document.createElement('p');
-  const gitBio = document.createElement('p');
+const githubCard = (user => {
 
-  card.appendChild(cardInfo);
-  cardInfo.appendChild(name);
-  cardInfo.appendChild(userName);
-  cardInfo.appendChild(location);
-  cardInfo.appendChild(profile);
-  cardInfo.appendChild(followers);
-  cardInfo.appendChild(following);
-  cardInfo.appendChild(bio);
-  profile.appendChild(address);
+const gitCard = document.createElement('div');
+const gitImage = document.createElement('img');
+const gitInfo = document.createElement('div');
+const gitName = document.createElement('h3');
+const gitUsername = document.createElement('p');
+const gitLocation = document.createElement('p');
+const gitProfile = document.createElement('p');
+const gitAddress = document.createElement('a');
+const gitFollowers = document.createElement('p');
+const gitFollowing = document.createElement('p');
+const gitBio = document.createElement('p');
 
-  card.classList.add('card');
-  cardInfo.classList.add('card-info');
-  name.classList.add('name');
-  userName.classList.add('username');
+gitCard.appendChild(gitInfo);
+gitCard.appendChild(gitImage);
+gitInfo.appendChild(gitName);
+gitInfo.appendChild(gitUsername);
+gitInfo.appendChild(gitLocation);
+gitInfo.appendChild(gitProfile);
+gitInfo.appendChild(gitFollowers);
+gitInfo.appendChild(gitFollowing);
+gitInfo.appendChild(gitBio);
+gitProfile.appendChild(gitAddress);
+
+gitCard.classList.add('card');
+gitInfo.classList.add('card-info');
+gitName.classList.add('name');
+gitUsername.classList.add('username');
+
+gitImage.src = user.avatar_url;
+gitName.textContent = user.name;
+gitUsername.textContent = user.login;
+gitLocation.textContent = `Location: ${user.location}`;
+gitAddress.href = user.html_url;
+gitAddress.textContent = user.html_url;
+gitFollowers.textContent = `Followers: ${user.followers}`;
+gitFollowing.textContent = `Following: ${user.following}`;
+gitBio.textContent = `Bio: ${user.bio}`;
 
   
 
-  return githubCard;
-}
+return gitCard
 
+});
 
 
 /* List of LS Instructors Github username's: 
